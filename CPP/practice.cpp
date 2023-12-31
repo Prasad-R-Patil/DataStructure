@@ -150,12 +150,10 @@ class SinglyLinkedList
         }
     }
 
-    void DeleteAtPos(int data , int pos)
+    void DeleteAtPos(int pos)
     {
-        Node * newn = new Node();
-        newn->data=data;
-        newn->next=NULL;
-
+        Node * temp = first;
+        
         if(pos<1 || pos> size+1)
         {
             cout<<"Invalid Position....."<<endl;
@@ -178,12 +176,15 @@ class SinglyLinkedList
             {
                 temp=temp->next;
             }
-            newn->next=temp->next;
-            newn->data=data;
-            temp->next=newn;
-            size++;
+            
+            Node * taraget = temp->next;
+
+            temp->next=taraget->next;
+            delete taraget;
+            size--;
         }
-    }
+     }
+    
 
     void Display()
     {
@@ -246,7 +247,7 @@ int main()
     cout<<"#############################################"<<endl;
 
     
-    sobj.InsertAtPos(45,4);
+    sobj.InsertAtPos(4);
     cout<<"..............................................."<<endl;
 
 

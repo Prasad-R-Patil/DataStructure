@@ -6,20 +6,20 @@ class Node
     int data;
     Node *next;
 };
-class SLL
+class SinglyLinkedList
 {
     public:
 
     Node * first;
     int size;
 
-    SLL()
+    SinglyLinkedList()
     {
         first=NULL;
         size=0;
     }
 
-    void insertAtFirst(int data)
+    void InsertAtFirst(int data)
     {
         Node *newn=new Node();
         newn->data=data;
@@ -37,7 +37,7 @@ class SLL
             size++;
         }
     }
-    void insertAtLast(int data)
+    void InsertAtLast(int data)
     {
         Node *newn=new Node();
         newn->data=data;
@@ -61,6 +61,61 @@ class SLL
         }
     }
 
+        void DeleteAtFirst()
+    {
+    
+        if(first==NULL)
+        {
+            return;
+        }
+        else if(first->next==NULL)
+        {
+            delete first;
+            first=NULL;
+
+            size--;
+        }
+        else
+        {
+            Node * temp = first;
+            
+            first=first->next;
+            delete temp;
+
+            size--;
+            
+        }
+    }
+    void DeleteAtLast()
+    {
+    
+        if(first==NULL)
+        {
+            return;
+        }
+        else if(first->next==NULL)
+        {
+            delete first;
+            first=NULL;
+
+            size--;
+        }
+        else
+        {
+            Node * temp = first;
+            
+           while(temp->next->next != NULL)
+           {
+              temp=temp->next;
+           }
+             
+             delete temp->next;
+             temp->next=NULL;
+             size--;
+        }
+    }
+    
+
     void Display()
     {
         Node *temp=first;
@@ -71,23 +126,44 @@ class SLL
             temp=temp->next;
         }
         cout<<endl;
+        cout<<"Number of nodes in my linkedlist "<<size<<endl;
     }
 };
 int main()
 {
-    SLL sobj;
+    SinglyLinkedList  sobj;
 
-    sobj.insertAtFirst(50);
-    sobj.insertAtFirst(40);
-    sobj.insertAtFirst(30);
-    sobj.insertAtFirst(20);
-    sobj.insertAtFirst(10);
-
-    sobj.insertAtLast(60);
+    sobj.InsertAtFirst(100);
+    sobj.InsertAtFirst(90);
+    sobj.InsertAtFirst(80);
+    sobj.InsertAtFirst(70);
+    sobj.InsertAtFirst(60);
+    sobj.InsertAtFirst(50);
+    sobj.InsertAtFirst(40);
+    sobj.InsertAtFirst(30);
+    sobj.InsertAtFirst(20);
+    sobj.InsertAtFirst(10);
 
     sobj.Display();
 
-    cout<<"Number of nodes in my linkedlist "<<sobj.size<<endl;
+    sobj.InsertAtLast(110);
+    sobj.InsertAtLast(120);
+    sobj.InsertAtLast(130);
+    sobj.InsertAtLast(140);
+    sobj.InsertAtLast(150);
+
+    sobj.Display();
+
+    sobj.DeleteAtFirst();
+    
+    sobj.Display();
+
+    sobj.DeleteAtLast();
+    
+    sobj.Display();
+    
+
+    
 
 
     

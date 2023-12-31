@@ -1,94 +1,193 @@
 #include<iostream>
 using namespace std;
-
-class NODE
+class Node
 {
     public:
-        int data;
-        NODE * next;
+    int data;
+    Node *next;
 };
-
 class SinglyLinkedList
 {
-    public: 
-            NODE * Head;
-            int Size;
-    
+    public:
+
+    Node * first;
+    int size;
+
     SinglyLinkedList()
     {
-        Head = NULL;
-        Size = 0;
+        first=NULL;
+        size=0;
     }
 
     void InsertAtFirst(int data)
     {
-        NODE * newn = new NODE();
-
+        Node *newn=new Node();
         newn->data=data;
         newn->next=NULL;
 
-        if(Head==NULL)
+        if(first==NULL)
         {
-            Head=newn;
-            Size++;
+            first=newn;
+            size++;
         }
         else
         {
-            newn->next=Head;
-            Head=newn;
-            Size++;
-
+            newn->next=first;
+            first=newn;
+            size++;
         }
     }
-
     void InsertAtLast(int data)
     {
-             NODE * newn = new NODE();
-
+        Node *newn=new Node();
         newn->data=data;
         newn->next=NULL;
 
-        if(Head==NULL)
+        if(first==NULL)
         {
-            Head=newn;
-            Size++;
+            first=newn;
+            size++;
         }
         else
         {
-            NODE * temp=Head;
+            Node *temp=first;
 
-            while (temp->next != NULL)
+            while(temp->next!=NULL)
             {
                 temp=temp->next;
             }
             temp->next=newn;
-            Size++;
+            size++;
         }
     }
 
-    void DeleteAtFirst()
+        void DeleteAtFirst()
     {
-        Head->data=Head->next->data;
-        Head->next=Head->next->next;
+    
+        if(first==NULL)
+        {
+            return;
+        }
+        else if(first->next==NULL)
+        {
+            delete first;
+            first=NULL;
 
-        Size--;
+            size--;
+        }
+        else
+        {
+            Node * temp = first;
+            
+            first=first->next;
+            delete temp;
+
+            size--;
+            
+        }
+    }
+    void DeleteAtLast()
+    {
+    
+        if(first==NULL)
+        {
+            return;
+        }
+        else if(first->next==NULL)
+        {
+            delete first;
+            first=NULL;
+
+            size--;
+        }
+        else
+        {
+            Node * temp = first;
+            
+           while(temp->next->next != NULL)
+           {
+              temp=temp->next;
+           }
+             
+             delete temp->next;
+             temp->next=NULL;
+             size--;
+        }
+    }
+    
+    void InsertAtPos(int data , int pos)
+    {
+        Node * newn = new Node();
+        newn->data=data;
+        newn->next=NULL;
+
+        if(pos<1 || pos> size+1)
+        {
+            cout<<"Invalid Position....."<<endl;
+            return;
+        }
+        else if(pos == 1)
+        {
+            InsertAtFirst(data);
+        }
+         else if(pos == size+1)
+        {
+            InsertAtLast(data);
+        }
+        else
+        {
+            Node * newn = new Node();
+            Node * temp = first;
+
+            for(int i =1; i < pos-1; i++)
+            {
+                temp=temp->next;
+            }
+            newn->next=temp->next;
+            newn->data=data;
+            temp->next=newn;
+            size++;
+        }
     }
 
-    // void DeleteAtLast()
-    // {
-    //     NODE * temp = Head;
-
-    //     while(temp->next->next = NULL)
-    //     {
-    //         temp=temp->next;
-    //     }
-    //     temp->next=NULL;
-    //     Size--;
-    // }
-
-   void Display()
+    void DeleteAtPos(int data , int pos)
     {
-        NODE *temp=Head;
+        Node * newn = new Node();
+        newn->data=data;
+        newn->next=NULL;
+
+        if(pos<1 || pos> size+1)
+        {
+            cout<<"Invalid Position....."<<endl;
+            return;
+        }
+        else if(pos == 1)
+        {
+            DeleteAtFirst();
+        }
+         else if(pos == size+1)
+        {
+            DeleteAtLast();
+        }
+        else
+        {
+            Node * newn = new Node();
+            Node * temp = first;
+
+            for(int i =1; i < pos-1; i++)
+            {
+                temp=temp->next;
+            }
+            newn->next=temp->next;
+            newn->data=data;
+            temp->next=newn;
+            size++;
+        }
+    }
+
+    void Display()
+    {
+        Node *temp=first;
 
         while(temp!=NULL)
         {
@@ -96,16 +195,14 @@ class SinglyLinkedList
             temp=temp->next;
         }
         cout<<endl;
-        cout<<Size<<endl;
-        
+        cout<<"Number of nodes in my linkedlist "<<size<<endl;
     }
-
 };
-
 int main()
 {
     SinglyLinkedList  sobj;
-
+    
+    cout<<"#############################################"<<endl;
     sobj.InsertAtFirst(100);
     sobj.InsertAtFirst(90);
     sobj.InsertAtFirst(80);
@@ -116,20 +213,47 @@ int main()
     sobj.InsertAtFirst(30);
     sobj.InsertAtFirst(20);
     sobj.InsertAtFirst(10);
+    cout<<"..............................................."<<endl;
+
+
+    sobj.Display();
+    cout<<"#############################################"<<endl;
 
     sobj.InsertAtLast(110);
     sobj.InsertAtLast(120);
     sobj.InsertAtLast(130);
     sobj.InsertAtLast(140);
     sobj.InsertAtLast(150);
+    cout<<"..............................................."<<endl;
 
-    sobj.DeleteAtFirst();
-    sobj.DeleteAtFirst();
-
-    // sobj.DeleteAtLast();
-    // sobj.DeleteAtLast();
 
     sobj.Display();
+    cout<<"#############################################"<<endl;
+
+    sobj.DeleteAtFirst();
+    cout<<"..............................................."<<endl;
+
+    
+    sobj.Display();
+    cout<<"#############################################"<<endl;
+
+
+    sobj.DeleteAtLast();
+    cout<<"..............................................."<<endl;
+
+    
+    sobj.Display();
+    cout<<"#############################################"<<endl;
+
+    
+    sobj.InsertAtPos(45,4);
+    cout<<"..............................................."<<endl;
+
+
+    sobj.Display();
+    cout<<"#############################################"<<endl;
+
+
     
 
 }

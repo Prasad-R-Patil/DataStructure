@@ -5,9 +5,6 @@ class Node
     public:
     int data;
     Node *next;
-
-    Node * newn = new Node(data);
-
 };
 class SinglyLinkedList
 {
